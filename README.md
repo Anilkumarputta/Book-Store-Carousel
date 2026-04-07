@@ -2,6 +2,9 @@
 
 A responsive, interactive **Book Store Carousel** web project that showcases books in a smooth sliding carousel UI. This repository contains the project source and a pre-built production bundle in the `dist/` folder.
 
+## Demo
+Live Site: https://anilkumarputta.github.io/Book-Store-Carousel/
+
 ## Table of Contents
 - [Overview](#overview)
 - [Features](#features)
@@ -47,9 +50,12 @@ This repo includes a ready-to-serve build inside the `dist/` directory.
 
 If this project uses a bundler (like Vite/Webpack), list it here as well.
 
-## Demo
-- If deployed, add your live link here.
-- Example: `https://<your-username>.github.io/Book-Store-Carousel/`
+### GitHub Pages (Using `dist/`)
+This project is deployed using **GitHub Actions** to publish the `dist/` folder to GitHub Pages.
+
+1. Go to **Settings → Pages**
+2. Under **Build and deployment**, set **Source** to **GitHub Actions**
+3. Push to the `main` branch to trigger deployment (or run the workflow manually from the **Actions** tab)
 
 ## Screenshots
 Add screenshots/gifs here to make the README look professional.

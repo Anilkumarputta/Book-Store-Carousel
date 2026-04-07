@@ -1,0 +1,703 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CodeAstraHub BookStore â€” Premium books for everyone: kids, students, professionals, and lifelong readers. Browse tech, fiction, medical, business, self-help, cooking, science, history, and more.">
+  <meta name="keywords" content="bookstore, books online, kids books, fiction, tech books, medical books, study books, business books, self-help, cooking, science, history, React, JavaScript">
+  <meta name="author" content="CodeAstraHub">
+  <meta name="theme-color" content="#0f766e">
+  <meta property="og:title" content="CodeAstraHub BookStore â€” Premium Books for Everyone">
+  <meta property="og:description" content="Curated books for kids, students, professionals, and everyone. Browse 40+ premium titles across tech, fiction, medical, business, self-help, and more.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>CodeAstraHub BookStore â€” Premium Books for Everyone</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap"
+  >
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <!-- Reading Progress Bar -->
+  <div class="reading-progress-bar" id="readingProgressBar">
+    <div class="reading-progress-fill"></div>
+  </div>
+
+  <!-- Premium Preloader -->
+  <div class="preloader" id="preloader">
+    <span class="preloader-brand">CodeAstraHub BookStore</span>
+    <div class="preloader-bar"><div class="preloader-bar-fill"></div></div>
+    <span class="preloader-copy">Loading premium experienceâ€¦</span>
+  </div>
+
+  <div class="page-watermark" id="pageWatermark" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="brand-block">
+      <a class="brand-link" href="#site-title">CODEASTRAHUB BOOKSTORE</a>
+    </div>
+
+    <nav class="topbar-nav" aria-label="Primary navigation">
+      <a href="#shelf-title">Featured</a>
+      <a href="#catalog-title">Catalog</a>
+      <a href="#reviews-title">Reviews</a>
+    </nav>
+
+    <div class="topbar-actions">
+      <button class="control-btn control-btn--theme" id="globalThemeToggle" type="button" aria-label="Toggle dark mode">
+        <i class="fa-solid fa-moon" id="globalThemeIcon" aria-hidden="true"></i>
+      </button>
+      <button class="control-btn control-btn--sound" id="soundToggle" type="button" aria-label="Toggle sounds">
+        <i class="fa-solid fa-volume-high" aria-hidden="true"></i>
+      </button>
+      <button class="control-btn control-btn--wishlist" id="openWishlistBtn" type="button">
+        <i class="fa-regular fa-heart" id="wishlistTopIcon" aria-hidden="true"></i>
+        <span id="wishlistTopLabel">Wishlist</span>
+        <span class="badge" id="wishlistCount">0</span>
+      </button>
+      <button class="control-btn control-btn--solid" id="openCartBtn" type="button">
+        <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i>
+        Cart
+        <span class="badge badge--solid" id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <button class="floating-wishlist-btn" id="floatingWishlistBtn" type="button" aria-label="Open wishlist">
+    <i class="fa-regular fa-heart" id="floatingWishlistIcon" aria-hidden="true"></i>
+    <span class="floating-badge is-hidden" id="floatingWishlistCount">0</span>
+  </button>
+
+  <main class="page-shell">
+    <!-- Hero Spotlight (cursor follow) -->
+    <div class="hero-spotlight" id="heroSpotlight" aria-hidden="true"></div>
+
+    <section class="hero-section" id="heroSection">
+      <section class="hero-copy" aria-labelledby="site-title">
+        <p class="eyebrow">Your universal bookstore</p>
+        <h1 id="site-title">Books for every reader â€” from kids to professionals.</h1>
+        <p class="lede">
+          Browse premium titles across tech, fiction, kids, medical, business,
+          self-help, science, cooking, history, and more.
+        </p>
+
+        <div class="hero-stat-grid">
+          <article class="hero-stat">
+            <strong>42</strong>
+            <span>Curated books</span>
+          </article>
+          <article class="hero-stat">
+            <strong>10</strong>
+            <span>Categories</span>
+          </article>
+          </article>
+          <article class="hero-stat">
+            <strong>PayVista</strong>
+            <span>Secure checkout flow</span>
+          </article>
+        </div>
+
+        <p class="helper-text" id="activeCount">Curated frontend and full-stack reads for modern technical teams.</p>
+        <div class="active-book" id="activeMeta" aria-live="polite"></div>
+      </section>
+
+      <section class="hero-gallery" aria-labelledby="shelf-title">
+        <div class="gallery-head">
+          <div>
+            <p class="eyebrow">Featured shelf</p>
+            <h2 id="shelf-title">Technical books moving across the shelf</h2>
+          </div>
+          <p class="gallery-copy">Select any cover to open the full product view with chapters, related titles, and checkout actions.</p>
+        </div>
+
+        <div class="gallery-viewport" id="galleryViewport">
+          <div class="gallery-track" id="storySlides"></div>
+        </div>
+
+        <div class="gallery-bottom" aria-label="Premium shelf visuals">
+          <div class="section-head section-head--compact">
+            <div>
+              <p class="eyebrow">Inside the shelf</p>
+              <h3>Premium technical collection highlights</h3>
+            </div>
+          </div>
+          <div class="gallery-photo-grid" id="galleryPhotoGrid"></div>
+
+          <div class="gallery-promo-shell" aria-labelledby="promo-title">
+            <div class="section-head section-head--compact">
+              <div>
+                <p class="eyebrow">Promotions</p>
+                <h3 id="promo-title">Live offers for technical readers and teams</h3>
+              </div>
+            </div>
+            <div class="gallery-promo-grid" id="galleryPromoGrid"></div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section class="expansion-section premium-reveal" aria-labelledby="expansion-title">
+      <div class="feature-strip-head">
+        <div>
+          <p class="eyebrow">Premium updates</p>
+          <h2 id="expansion-title">More technical experiences from CodeAstraHub</h2>
+        </div>
+      </div>
+      <div class="expansion-grid" id="expansionGrid"></div>
+    </section>
+
+    <section class="feature-strip premium-reveal" aria-labelledby="feature-title">
+      <div class="feature-strip-head">
+        <div>
+          <p class="eyebrow">Storefront highlights</p>
+          <h2 id="feature-title">Experiences designed for technical readers</h2>
+        </div>
+      </div>
+      <div class="feature-grid" id="featureGrid"></div>
+    </section>
+
+    <section class="catalog-section premium-reveal" aria-labelledby="catalog-title">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Browse the catalog</p>
+          <h2 id="catalog-title">Premium shelves for every reader</h2>
+        </div>
+
+        <div class="catalog-controls">
+          <label class="search-field">
+            <span class="field-label">Search</span>
+            <input id="searchInput" type="search" placeholder="Search by title, topic, or author">
+          </label>
+
+          <label class="sort-field">
+            <span class="field-label">Sort</span>
+            <select id="sortSelect">
+              <option value="top-rated">Top Rated</option>
+              <option value="newest">Newest</option>
+              <option value="price">Price</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div class="filter-bar" id="filterBar"></div>
+      <div class="catalog-grid" id="catalogGrid"></div>
+      <div class="catalog-pagination" id="catalogPagination"></div>
+    </section>
+
+    <section class="reviews-section premium-reveal" aria-labelledby="reviews-title">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Reader feedback</p>
+          <h2 id="reviews-title">Verified reviews from our customers</h2>
+        </div>
+      </div>
+      <!-- Testimonial carousel wrapper -->
+      <div class="testimonial-carousel" id="testimonialCarousel">
+        <div class="testimonial-track" id="testimonialTrack"></div>
+        <div class="testimonial-controls">
+          <button class="testimonial-btn" id="testimonialPrev" type="button" aria-label="Previous review"><i class="fa-solid fa-chevron-left"></i></button>
+          <div class="testimonial-dots" id="testimonialDots"></div>
+          <button class="testimonial-btn" id="testimonialNext" type="button" aria-label="Next review"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+      <div class="review-grid" id="reviewGrid"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div>
+        <p class="eyebrow">CodeAstraHub BookStore</p>
+        <h2 class="footer-title">A premium bookstore for readers of all ages and interests.</h2>
+        <p class="footer-copy">
+          Curated books across tech, kids, fiction, medical, business, self-help,
+          science, cooking, and history â€” with polished product pages and secure checkout.
+        </p>
+      </div>
+
+      <div>
+        <h3>Popular shelves</h3>
+        <ul class="footer-list">
+          <li><a href="#catalog-title">Tech & Programming</a></li>
+          <li><a href="#catalog-title">Kids & Children</a></li>
+          <li><a href="#catalog-title">Fiction & Stories</a></li>
+          <li><a href="#catalog-title">Medical & Health</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>More categories</h3>
+        <ul class="footer-list">
+          <li><a href="#catalog-title">Business & Work</a></li>
+          <li><a href="#catalog-title">Self-Help & Wellness</a></li>
+          <li><a href="#catalog-title">Science & Nature</a></li>
+          <li><a href="#catalog-title">Cooking & Lifestyle</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Support</h3>
+        <ul class="footer-list">
+          <li><a href="#feature-title">Store highlights</a></li>
+          <li><a href="#reviews-title">Customer reviews</a></li>
+          <li><a href="#catalog-title">Browse all books</a></li>
+          <li>sales@codeastrahub.com</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="footer-bottom">&copy; <span id="footerYear"></span> CodeAstraHub BookStore. Premium books for everyone â€” kids, students, professionals, and lifelong readers. Quick keys: / Search, W Wishlist, C Cart, P Featured Book.</p>
+  </footer>
+
+  <div class="modal-shell is-hidden" id="featureModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-feature-modal></div>
+    <section class="feature-modal" role="dialog" aria-modal="true" aria-labelledby="featureModalTitle">
+      <button class="modal-close" id="modalClose" type="button" aria-label="Close feature detail">Close</button>
+      <p class="eyebrow">Store feature</p>
+      <h2 id="featureModalTitle"></h2>
+      <p class="modal-copy" id="featureModalCopy"></p>
+      <ul class="modal-list" id="featureModalList"></ul>
+    </section>
+  </div>
+
+  <div class="modal-shell is-hidden" id="productModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-product-modal></div>
+    <section class="product-modal" role="dialog" aria-modal="true" aria-labelledby="productModalTitle">
+      <button class="modal-close" id="productModalClose" type="button" aria-label="Close product page">Close</button>
+
+      <div class="product-modal-grid">
+        <div class="product-modal-cover" id="productModalCover"></div>
+
+        <div class="product-modal-copy">
+          <p class="eyebrow" id="productModalTag"></p>
+          <h2 id="productModalTitle"></h2>
+          <p class="product-modal-meta" id="productModalMeta"></p>
+          <p class="modal-copy" id="productModalSummary"></p>
+
+          <div class="modal-actions">
+            <button class="control-btn control-btn--solid" id="productBuyNowBtn" type="button">Buy now</button>
+            <button class="control-btn control-btn--wishlist" id="productWishlistBtn" type="button">
+              <i class="fa-regular fa-heart" aria-hidden="true"></i>
+              <span>Add to wishlist</span>
+            </button>
+          </div>
+
+          <p class="modal-status" id="productModalStatus" aria-live="polite"></p>
+        </div>
+      </div>
+
+      <div class="product-detail-grid">
+        <article class="detail-card">
+          <p class="eyebrow">Chapter preview</p>
+          <ul class="modal-list" id="productChapters"></ul>
+        </article>
+
+        <article class="detail-card">
+          <p class="eyebrow">What this book covers</p>
+          <ul class="modal-list" id="productHighlights"></ul>
+        </article>
+      </div>
+
+      <div class="related-panel">
+        <div class="section-head section-head--compact">
+          <div>
+            <p class="eyebrow">Related titles</p>
+            <h3>Continue the technical shelf</h3>
+          </div>
+        </div>
+        <div class="related-grid" id="productRelated"></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="drawer-shell is-hidden" id="wishlistDrawer" aria-hidden="true">
+    <div class="modal-backdrop" data-close-wishlist></div>
+    <aside class="side-drawer" aria-labelledby="wishlistTitle">
+      <button class="modal-close" id="wishlistClose" type="button" aria-label="Close wishlist">Close</button>
+      <p class="eyebrow">Saved titles</p>
+      <h2 id="wishlistTitle">Wishlist</h2>
+      <div class="drawer-list" id="wishlistList"></div>
+    </aside>
+  </div>
+
+  <div class="drawer-shell is-hidden" id="cartDrawer" aria-hidden="true">
+    <div class="modal-backdrop" data-close-cart></div>
+    <aside class="side-drawer side-drawer--wide" aria-labelledby="cartTitle">
+      <button class="modal-close" id="cartClose" type="button" aria-label="Close cart">Close</button>
+      <p class="eyebrow">Order summary</p>
+      <h2 id="cartTitle">Cart</h2>
+
+      <div class="drawer-list" id="cartList"></div>
+
+      <div class="cart-summary">
+        <p><span>Items</span><strong id="cartItemsTotal">0</strong></p>
+        <p><span>Subtotal</span><strong id="cartSubtotal">$0</strong></p>
+        <p><span>Service Tax</span><strong id="cartTax">$0</strong></p>
+        <p><span>Shipping</span><strong id="cartShipping">$0</strong></p>
+        <p class="cart-summary-total"><span>Total</span><strong id="cartTotal">$0</strong></p>
+        <button class="control-btn control-btn--solid cart-submit" id="openCheckoutBtn" type="button">Open secure checkout</button>
+        <p class="modal-status" id="cartStatus" aria-live="polite"></p>
+      </div>
+    </aside>
+  </div>
+
+  <div class="modal-shell is-hidden" id="checkoutModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-checkout></div>
+    <section class="checkout-modal" role="dialog" aria-modal="true" aria-labelledby="checkoutHeading">
+      <button class="modal-close" id="checkoutClose" type="button" aria-label="Close checkout">Close</button>
+
+      <div class="checkout-success is-hidden" id="checkoutSuccess" aria-hidden="true">
+        <div class="success-mark">
+          <i class="fa-solid fa-check"></i>
+        </div>
+        <h2 id="checkoutSuccessTitle">Payment Confirmed!</h2>
+        <p>Transaction ID: <strong id="checkoutTransactionId">#PV-000000</strong></p>
+        <button class="control-btn control-btn--solid" id="checkoutSuccessClose" type="button">Continue browsing</button>
+      </div>
+
+      <div class="checkout-header">
+        <div>
+          <p class="eyebrow">PayVista Checkout</p>
+          <h2 id="checkoutHeading">Secure checkout for technical books</h2>
+          <p class="checkout-copy">Complete customer details, choose a payment method, and review the order before payment.</p>
+        </div>
+
+        <div class="checkout-brand" aria-hidden="true">
+          <i class="fa-solid fa-bolt"></i>
+          <span>PayVista Checkout</span>
+        </div>
+
+        <div class="checkout-steps" aria-label="Checkout steps">
+          <button class="step-pill is-active" type="button" data-step-target="1"><span>1</span>Customer</button>
+          <button class="step-pill" type="button" data-step-target="2"><span>2</span>Payment</button>
+          <button class="step-pill" type="button" data-step-target="3"><span>3</span>Review</button>
+        </div>
+      </div>
+
+      <div class="checkout-layout">
+        <aside class="checkout-sidebar">
+          <div class="checkout-summary-card">
+            <p class="checkout-label">Amount Due</p>
+            <p class="checkout-total-large" id="checkoutTotalLarge">$0</p>
+            <div class="price-breakdown">
+              <p><span>Product Subtotal</span><strong id="checkoutSubtotal">$0</strong></p>
+              <p><span>Service Tax (5%)</span><strong id="checkoutTax">$0</strong></p>
+              <p><span>Shipping</span><strong id="checkoutShipping">$0</strong></p>
+              <p class="price-breakdown-total"><span>Total</span><strong id="checkoutTotal">$0</strong></p>
+            </div>
+            <p class="session-pill">
+              <i class="fa-regular fa-clock"></i>
+              <span>Secure session</span>
+              <strong id="sessionTimer">10:00</strong>
+            </p>
+          </div>
+
+          <div class="checkout-summary-card">
+            <p class="checkout-label">Order items</p>
+            <div class="checkout-item-list" id="checkoutSidebarItems"></div>
+          </div>
+
+          <div class="checkout-summary-card">
+            <p class="checkout-label">Why shoppers trust us</p>
+            <ul class="trust-list">
+              <li>256-bit encrypted checkout</li>
+              <li>Instant refund support</li>
+              <li>Transparent pricing</li>
+            </ul>
+          </div>
+        </aside>
+
+        <div class="checkout-main">
+          <section class="checkout-panel is-active" data-step-panel="1">
+            <div class="checkout-panel-head">
+              <div>
+                <p class="eyebrow">Customer details</p>
+                <h3>Delivery and contact information</h3>
+              </div>
+            </div>
+
+            <form class="checkout-form" id="customerForm" novalidate>
+              <label class="form-group">
+                <span class="field-label">Full name</span>
+                <input id="checkoutName" type="text" placeholder="Enter full name">
+                <span class="field-error"></span>
+              </label>
+
+              <label class="form-group">
+                <span class="field-label">Email</span>
+                <input id="checkoutEmail" type="email" placeholder="name@company.com">
+                <span class="field-error"></span>
+              </label>
+
+              <label class="form-group">
+                <span class="field-label">Phone</span>
+                <input id="checkoutPhone" type="tel" placeholder="+1 555 123 4567">
+                <span class="field-error"></span>
+              </label>
+
+              <label class="form-group">
+                <span class="field-label">Company</span>
+                <input id="checkoutCompany" type="text" placeholder="Company or team name">
+                <span class="field-error"></span>
+              </label>
+
+              <label class="form-group form-group--full">
+                <span class="field-label">Address</span>
+                <input id="checkoutAddress" type="text" placeholder="Street address">
+                <span class="field-error"></span>
+              </label>
+
+              <label class="form-group">
+                <span class="field-label">City</span>
+                <input id="checkoutCity" type="text" placeholder="City">
+                <span class="field-error"></span>
+              </label>
+
+              <label class="form-group">
+                <span class="field-label">Country</span>
+                <input id="checkoutCountry" type="text" placeholder="Country">
+                <span class="field-error"></span>
+              </label>
+
+              <label class="form-group">
+                <span class="field-label">Postal code</span>
+                <input id="checkoutPostalCode" type="text" placeholder="Postal code">
+                <span class="field-error"></span>
+              </label>
+            </form>
+          </section>
+
+          <section class="checkout-panel" data-step-panel="2">
+            <div class="checkout-panel-head">
+              <div>
+                <p class="eyebrow">Payment step</p>
+                <h3>Choose a payment method</h3>
+              </div>
+            </div>
+
+            <div class="payment-shell">
+              <aside class="payment-sidebar">
+                <button class="option-btn is-active" type="button" data-payment-method="card">
+                  <i class="fa-regular fa-credit-card"></i>
+                  <span>Credit / Debit Card</span>
+                </button>
+                <button class="option-btn" type="button" data-payment-method="upi">
+                  <i class="fa-solid fa-mobile-screen-button"></i>
+                  <span>UPI / QR</span>
+                </button>
+                <button class="option-btn" type="button" data-payment-method="netbanking">
+                  <i class="fa-solid fa-building-columns"></i>
+                  <span>Net Banking</span>
+                </button>
+                <button class="option-btn" type="button" data-payment-method="wallets">
+                  <i class="fa-solid fa-wallet"></i>
+                  <span>Wallets</span>
+                </button>
+                <button class="option-btn" type="button" data-payment-method="cod">
+                  <i class="fa-solid fa-truck-fast"></i>
+                  <span>Cash on Delivery</span>
+                </button>
+              </aside>
+
+                <div class="payment-main">
+                <div class="utility-controls">
+                  <label class="mini-control">
+                    <i class="fa-solid fa-language"></i>
+                    <select id="languageSelect" class="mini-select" aria-label="Language">
+                      <option value="en">English</option>
+                      <option value="es">Spanish</option>
+                      <option value="fr">French</option>
+                    </select>
+                  </label>
+
+                  <label class="mini-control">
+                    <i class="fa-solid fa-coins"></i>
+                    <select id="currencySelect" class="mini-select" aria-label="Currency">
+                      <option value="USD">USD - US Dollar</option>
+                      <option value="EUR">EUR - Euro</option>
+                      <option value="GBP">GBP - Pound</option>
+                      <option value="CAD">CAD - Canadian Dollar</option>
+                    </select>
+                  </label>
+
+                  <button class="theme-toggle" id="themeToggle" type="button">
+                    <i class="fa-solid fa-moon" id="themeIcon"></i>
+                    <span id="themeLabel">Dark Theme</span>
+                  </button>
+                </div>
+
+                <p class="exchange-note" id="exchangeRateNote">Secure rates are synced for selected checkout currency.</p>
+
+                <div class="payment-strip">
+                  <div class="feature-chip"><i class="fa-solid fa-bolt"></i> <span>Fast confirmation</span></div>
+                  <div class="feature-chip"><i class="fa-solid fa-shield"></i> <span id="methodBadge">Card offers enabled</span></div>
+                </div>
+
+                <div class="live-ticker">
+                  <span class="live-dot"></span>
+                  <p id="liveTickerText">Mason from Seattle just paid $94.00 using Card.</p>
+                </div>
+
+                <div class="payment-view is-active" data-method-view="card">
+                  <h4>Card Payment</h4>
+                  <p class="payment-copy">Accepted cards: Visa, Mastercard, American Express, and Discover.</p>
+                  <div class="accepted-cards">
+                    <i class="fa-brands fa-cc-visa"></i>
+                    <i class="fa-brands fa-cc-mastercard"></i>
+                    <i class="fa-brands fa-cc-amex"></i>
+                    <i class="fa-brands fa-cc-discover"></i>
+                  </div>
+                  <div class="checkout-form checkout-form--payment">
+                    <label class="form-group form-group--full">
+                      <span class="field-label">Card Number</span>
+                      <input id="cardNumber" type="text" placeholder="0000 0000 0000 0000" maxlength="19">
+                      <span class="field-error"></span>
+                    </label>
+
+                    <label class="form-group">
+                      <span class="field-label">Expiry</span>
+                      <input id="cardExpiry" type="text" placeholder="MM/YY" maxlength="5">
+                      <span class="field-error"></span>
+                    </label>
+
+                    <label class="form-group">
+                      <span class="field-label">CVV</span>
+                      <input id="cardCvv" type="password" placeholder="123" maxlength="4">
+                      <span class="field-error"></span>
+                    </label>
+
+                    <label class="form-group form-group--full">
+                      <span class="field-label">Card Holder</span>
+                      <input id="cardHolder" type="text" placeholder="Name on card">
+                      <span class="field-error"></span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="payment-view" data-method-view="upi">
+                  <h4>UPI / QR Code</h4>
+                  <div class="upi-box">
+                    <i class="fa-solid fa-qrcode"></i>
+                    <p>Scan with your preferred UPI app or continue with a UPI ID.</p>
+                  </div>
+                  <label class="form-group form-group--full">
+                    <span class="field-label">UPI ID</span>
+                    <input id="upiId" type="text" placeholder="username@bank">
+                    <span class="field-error"></span>
+                  </label>
+                </div>
+
+                <div class="payment-view" data-method-view="netbanking">
+                  <h4>Net Banking</h4>
+                  <label class="form-group form-group--full">
+                    <span class="field-label">Select Bank</span>
+                    <select id="netBankSelect">
+                      <option value="">Select bank</option>
+                      <option value="chase">Chase Bank</option>
+                      <option value="bofa">Bank of America</option>
+                      <option value="discover">Discover Bank</option>
+                      <option value="wells">Wells Fargo</option>
+                      <option value="citi">Citibank</option>
+                    </select>
+                    <span class="field-error"></span>
+                  </label>
+                  <p class="payment-copy">Major U.S. banks supported with secure authentication.</p>
+                </div>
+
+                <div class="payment-view" data-method-view="wallets">
+                  <h4>Digital Wallets</h4>
+                  <div class="wallet-grid">
+                    <label class="wallet-item">
+                      <input type="radio" name="wallet" value="amazon" checked>
+                      <span>Amazon Pay</span>
+                    </label>
+                    <label class="wallet-item">
+                      <input type="radio" name="wallet" value="paypal">
+                      <span>PayPal</span>
+                    </label>
+                    <label class="wallet-item">
+                      <input type="radio" name="wallet" value="apple">
+                      <span>Apple Pay</span>
+                    </label>
+                  </div>
+                  <div class="biometric-panel">
+                    <div class="bio-icon">
+                      <i class="fa-solid fa-fingerprint"></i>
+                    </div>
+                    <div class="bio-copy-block">
+                      <h5>Biometric Quick Pay</h5>
+                      <p id="walletStatus">Tap verify to simulate wallet biometric confirmation.</p>
+                    </div>
+                    <button class="control-btn" id="walletVerifyBtn" type="button">Verify</button>
+                  </div>
+                  <p class="field-error field-error--standalone" id="walletError"></p>
+                </div>
+
+                <div class="payment-view" data-method-view="cod">
+                  <h4>Cash on Delivery</h4>
+                  <p class="payment-copy">Pay at your doorstep after a quick verification.</p>
+                  <div class="captcha-box">
+                    <div class="captcha-code" id="codCode">9Y2A</div>
+                    <label class="form-group form-group--full">
+                      <span class="field-label">Verification Code</span>
+                      <input id="codInput" type="text" placeholder="Enter code">
+                      <span class="field-error"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="checkout-panel" data-step-panel="3">
+            <div class="checkout-panel-head">
+              <div>
+                <p class="eyebrow">Review order</p>
+                <h3>Confirm the details before payment</h3>
+              </div>
+            </div>
+
+            <div class="review-summary-grid">
+              <article class="detail-card">
+                <p class="eyebrow">Customer</p>
+                <div class="review-copy" id="checkoutReviewCustomer"></div>
+              </article>
+
+              <article class="detail-card">
+                <p class="eyebrow">Payment</p>
+                <div class="review-copy" id="checkoutReviewPayment"></div>
+              </article>
+            </div>
+
+            <article class="detail-card detail-card--full">
+              <p class="eyebrow">Books in this order</p>
+              <div class="checkout-item-list" id="checkoutReviewItems"></div>
+            </article>
+          </section>
+        </div>
+      </div>
+
+      <div class="checkout-footer">
+        <p class="modal-status" id="checkoutError" aria-live="polite"></p>
+        <div class="checkout-footer-actions">
+          <button class="control-btn" id="checkoutBackBtn" type="button">Back</button>
+          <button class="control-btn control-btn--solid" id="checkoutNextBtn" type="button">Continue to payment</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
+
+
